@@ -1,5 +1,7 @@
 java知识总结；
 
+11月9日：
+
 1、	Java的参数传递机制————值传递 但是需要注意的是当传递的参数是一个对象的时候，
 	这时参数的指向的对象地址都是同一个，所以在这个函数里面对对象进行改变的话，就是在改变这个地址对应的对象。
 
@@ -14,3 +16,44 @@ java知识总结；
 5、报空指针异常，一般原因是因为调用了空对象的方法。
 	比如，Integer a = null;  int d = c; 就会报空指针异常。因为int d = c; 这句代码实际是这样的：
 	int d = c.intValue();
+	
+	
+
+11月10日：
+
+1、java中的throws抛出异常，指的是该方法中有抛出异常，但是不用在该方法中try-catch，
+	谁调用谁处理异常，即try-catch，亦可继续使用throws抛出，直到main方法抛给JRE。
+	
+2、java中的复制数组的方法：System.arrayCopy(参数1，参数2，参数3，参数4，参数5) 
+	参数1写新数组，参数2是在新数组的第几个（索引位置）开始复制，
+	参数3是要被复制的数组，参数4是在被复制的数组的第几个（索引位置）开始复制
+	参数5是要复制的元素个数。 
+	
+11月11日：
+	1、java中没有类似C++中的指针一样的东西。但是java中的对象指向的是同一个地址，例：
+		Node node1 = new Node(); 这里的node1指向一个地址，假设是qwer。
+		Node node2 = null;
+		node2 = node1;  因为node2是空的，所以之前并没有分配地址，这里把node1赋值给node2，
+						node2指向的地址也就变成了qwer，所以对node2的改动，node1也会跟着变化。
+						
+11月13日：
+
+1、hashMap线程不安全，效率高，允许key和value为空（null），
+	hashTable线程安全，但是效率低，不允许key和value为空（null）。
+	
+2、使用迭代器遍历Map（时间开销小):
+		public static void testIterator(){
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "aa");
+        map.put(2, "bb");
+        map.put(3, "cc");
+        Set<Integer> keySet = map.keySet();
+        for (Iterator<Integer> iter = keySet.iterator(); iter.hasNext();){
+            Integer key = iter.next();
+//          System.out.println(iter.next()+ "--" + map.get(iter.next())); // 错的写法
+            System.out.println(key + "--" + map.get(key)); // 正确的写法
+        }
+    }
+	这里上面错的写法的原因（自己猜想）：因为是使用的iter.next()，第一次是指向1的位置，但是后面使用
+	map.get(iter.next())时，此时已经指向2的位置了，所以会得到输出 1--bb，然后报错。
+		
